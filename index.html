@@ -1,0 +1,167 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>HangMan</title>
+</head>
+<link rel="stylesheet" href="assets/css/reset.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<body>
+ <h1> PRESS ANY KEY TO GET STARTED</h1>
+<br>
+
+<section id="tally">	
+
+	<h1>Wins <span id="wins">0</span></h1>
+
+	<h1>Losses <span id="losses">0</span></h1>
+	<h3 id="current-word">_</h3>
+	<p>Guesses Used: <h3 id="guesses">0</h3></p>
+	<p>Remaining Guesses: <h3 id="remaining-guesses">0</h3></p>
+	<h3 id="used-words">0</h3>
+
+	<div class="hangmaninput">
+
+	</div>
+	 </section>
+
+  <script type="text/javascript">
+
+      // Here we are provided an initial array of letters.
+      // Use this array to dynamically create on.key display screen.
+    
+// all lower case, and start with no spaces
+	var options = ["wild", "west", "cowboy", "boots", "tumbleweed", "cactus", "cops", "robbers", "horse", "saddle"];
+
+	// get a random  option
+	var computerPick = options[Math.floor(Math.random()*options.length)];
+	console.log(computerPick);
+
+	// Get all the letters of the computer pick in an array
+	var computerPickLetters = computerPick.split('');
+	console.log(computerPickLetters);
+	// Create place holder for tracking progress on the word
+	var placeholder = [];
+	// Create place holder for user input
+	for (var i = 0; i < computerPickLetters.length; i++) {
+		placeholder.push('_');
+	}
+
+ // keep track off wins,losses,correct guesses,incorrect guesses, current letter picked game over 
+
+	var wins = 0;
+	var losses = 0;
+	var incorrectGuesses = 0;
+	var maxIncorrectGuesses = 7;
+	// when user inputs incorrect guess it is tracked and connected with used-words input (H3)
+	var wrongGuessedLetters = [];
+
+	// initial UI setup 
+	document.getElementById('current-word').innerHTML = placeholder.join(" ");
+	document.getElementById('used-words').innerHTML = wrongGuessedLetters.join(" ");
+	document.getElementById('guesses').innerHTML = incorrectGuesses;
+	document.getElementById('remaining-guesses').innerHTML = maxIncorrectGuesses - incorrectGuesses;
+
+	var startGame =  function(){
+		// get a random  option
+	computerPick = options[Math.floor(Math.random()*options.length)];
+	console.log(computerPick);
+
+	// Get all the letters of the computer pick in an array
+	computerPickLetters = computerPick.split('');
+	console.log(computerPickLetters);
+	// Create place holder for tracking progress on the word
+	placeholder = [];
+	// Create place holder for user input
+	for (var i = 0; i < computerPickLetters.length; i++) {
+		placeholder.push('_');
+	}
+	//reset wrong guesses..
+	incorrectGuesses = 0;
+	wrongGuessedLetters = [];
+
+	//update ui
+	document.getElementById('current-word').innerHTML = placeholder.join(" ");
+	document.getElementById('used-words').innerHTML = wrongGuessedLetters.join(" ");
+	document.getElementById('guesses').innerHTML = incorrectGuesses;
+	document.getElementById('remaining-guesses').innerHTML = maxIncorrectGuesses - incorrectGuesses;
+	};
+	document.onkeyup = function(event) {
+	// only accept letters..
+		if(/[a-z]/i.test(String.fromCharCode(event.keyCode))){
+		// letter pressed
+		var userguess = String.fromCharCode(event.keyCode).toLowerCase();
+
+		console.log(userguess);
+		// document.write(userguess);
+
+		// we want to know if guess is correct or incorrect, if correct then we modify view and update guess, if incorrect usser losses a guess and guess counter drops, game continues until usser runs out of guesses 
+
+		var matchFound = false;
+		// We go trough each of the letters te determine if the user guess is correct
+		for (var i = 0; i < computerPickLetters.length; i++) {
+			if (computerPickLetters[i] === userguess) {
+				matchFound = true;
+				placeholder[i] = computerPickLetters[i];
+				if (placeholder.join('') === computerPick) {
+					wins++;
+					document.getElementById('wins').innerHTML = wins;
+					startGame();
+
+					// Update the UI
+
+				}
+			} 
+		}
+
+		if (!matchFound) {
+			console.log("no match");
+			// decrement the user guesses
+			wrongGuessedLetters.push(userguess);
+			incorrectGuesses++;
+			if (incorrectGuesses === maxIncorrectGuesses) {
+				losses++;
+				document.getElementById('losses').innerHTML = losses;
+				startGame();
+				// update the ui
+				// ask to restart the game
+			}
+		}
+
+
+
+
+		document.getElementById('current-word').innerHTML = placeholder.join(" ");
+		document.getElementById('used-words').innerHTML = wrongGuessedLetters.join(" ");
+		document.getElementById('guesses').innerHTML = incorrectGuesses;
+		document.getElementById('remaining-guesses').innerHTML = maxIncorrectGuesses - incorrectGuesses;
+		
+	}
+}
+	// Modify the infromation with the guesses and the failures
+
+	// Update the UI with used words and placeholder text
+	
+
+</script>	
+		
+
+
+<!-- Hangman using javascript 
+Create a Hangman Game 
+Create outline for index.html
+Website generates a word 
+User must input a letter choice to match generated word
+Capture the choice 
+Display the result to the user 
+If users input is correct then letter is revealed and game continues 
+if else user input is incorrect then user looses a guess 
+if user amounts of guesses are used, losses go up
+If else and word is found user wins go up
+Hangman game restarts and generates new word  -->
+
+
+
+</body>
+</html>
