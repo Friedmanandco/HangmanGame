@@ -13,16 +13,23 @@ body {
 }
 
 h1 {
-	font-size: 40px;
-	padding-top: 10px;
-	padding-right: 20%;
-	float: right;
+		float: bottom-right;
+		width: 50%;
+		padding-top: 0px;
+		font-size: 24px;
+		font-style: bold;
+
 }
 
 
 section {
 	clear: both;
 	overflow: auto;
+	float: right;
+	padding: 100px;
+	margin-top: 100px;
+	line-height: 40px;
+	text-align: center;
 
 	
 
@@ -30,6 +37,62 @@ section {
 
 
 }
+
+
+@media only screen and (max-width: 980px) {
+    .gridmenu {
+        width: 980px;
+    }
+
+    .gridmain {
+        width: 768px;
+    }
+
+    .gridright {
+        width: 640px;
+
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+    .gridmenu {
+        width: 980px;
+    }
+
+    .gridmain {
+        width: 768px;
+    }
+
+    .gridright {
+        width: 640px;
+
+    }
+
+}
+
+@media only screen and (max-width: 640px) {
+	.header {
+
+		position: static;
+	}
+   
+    .gridmenu {
+        width: 980px;
+    }
+
+    .gridmain {
+        width: 768px;
+    }
+
+    .gridright {
+        width: 640px;
+
+    }
+
+}
+
+
 
 
  
